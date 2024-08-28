@@ -7,6 +7,8 @@
 #include "Components/CapsuleComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Projectile/FPSProjectile.h"
+#include "Kismet/GameplayStatics.h"
+#include "HUD/FPSHUD.h"
 #include "FPSCharacter.generated.h"
 
 UCLASS()
@@ -55,4 +57,9 @@ public:
 
 	UFUNCTION()
 	void Fire();
+
+	float Health = 100;
+	const float MaxHealth = 100;
+
+	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
 };

@@ -124,4 +124,19 @@ void AFPSCharacter::Fire()
 	Projectile->FireInDirection(LaunchDirection);
 }
 
+float AFPSCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
+{
+	float FinalDamage = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+
+	AFPSHUD* HUD = UGameplayStatics::GetPlayerController(this, 0)->GetHUD<AFPSHUD>();
+	if (HUD) {
+		Health -= DamageAmount;
+		float HealthPercent = Health / MaxHealth;
+
+		HUD->gameWidgetContainer->SetHealthBar(HealthPercent);
+	}
+
+	return FinalDamage;
+}
+
 
